@@ -1,0 +1,14 @@
+I need to create the README.md documentation for the project. It must include:
+
+1. Clear execution instructions with examples
+2. Explanation of the approach and tradeoffs made
+3. Justification of the chosen performance metric
+4. Specific tie-break rule
+5. System assumptions
+6. List of future improvements if I had more time
+7. AI usage indication
+8. Time invested
+9. Project structure
+10. Output example
+
+The README should be in English and follow the format specified in Rules.txt. I also need to create the AI prompts files used and a FIXES.md with the corrections made.

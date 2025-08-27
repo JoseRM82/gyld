@@ -1,0 +1,10 @@
+I need to create a TypeScript/Node.js system that assigns players to balanced teams. The players are in a CSV file with fields like player_id, historical_event_engagements, historical_points_earned, etc.
+
+The algorithm must:
+1. Calculate the average points per event (historical_points_earned / historical_event_engagements)
+2. Sort players by this average (descending)
+3. In case of a tie, use player_id (ascending)
+4. Assign players to teams in a balanced way (maximum 1 player difference between teams)
+5. Be reproducible (same input = same output)
+
+Use functional programming, not OOP. The result must be deterministic.

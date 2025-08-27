@@ -1,0 +1,20 @@
+{
+  "name": "gyld-player-sorter",
+  "version": "1.0.0",
+  "description": "A TypeScript/Node.js solution for sorting players into balanced teams",
+  "main": "SortPlayers.ts",
+  "scripts": {
+    "start": "ts-node SortPlayers.ts"
+  },
+  "keywords": ["typescript", "node", "player-sorting", "team-balancing"],
+  "author": "Jose Matos",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parser": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^4.9.0",
+    "ts-node": "^10.9.0"
+  }
+}

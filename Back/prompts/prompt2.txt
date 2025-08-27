@@ -1,0 +1,13 @@
+I need to improve the player assignment algorithm. The current code uses a simple snake draft, but I want to ensure that:
+
+1. The first N players (where N = number of teams) are assigned one to each team
+2. For the rest, always assign to the team with fewer players
+3. If there are multiple teams with the same minimum size, choose the first one
+
+I also need:
+- Better error handling for CSV parsing
+- Validation that the number of teams is valid
+- Better output format with team statistics
+- Verification that teams are truly balanced
+
+Can you optimize these functions while maintaining the functional approach?

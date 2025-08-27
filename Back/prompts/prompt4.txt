@@ -1,0 +1,43 @@
+PROMPT 4: Multiple Sort Types Implementation
+
+User: "Is it possible to have different types of sort? For example, that the current one be a sort named events_performance, that there be another one called messages_length that takes the level_b_messages.csv file and gets the total message size (each message length belongs to the text_length column) of each player (represented by player_id) by summing all messages belonging to each player and ordering them from highest to lowest to do the same previous snake sort so that the teams are also balanced. Also another type of sort called points_spent that takes from level_b_spend.csv the total points_spent belonging to each player_id and orders them also from highest to lowest ordering the teams in a balanced way with the same snake assignment. That the sort type to use be chosen like: npm start --events_performance --teams 5 or npm start --points_spent --teams 3 and that if no sort type is provided, one is chosen randomly to use."
+
+Implementation Done:
+
+1. NEW INTERFACES:
+   - LevelBEvent: For Level B event data
+   - LevelBMessage: For message data (text_length)
+   - LevelBSpend: For spending data (points_spent)
+   - SortType: Union type for the three sort types
+
+2. NEW FUNCTIONS:
+   - calculateMessagesLengthTotal(): Total sum of message length per player
+   - calculatePointsSpentTotal(): Total sum of points spent per player
+   - readCsvFile<T>(): Generic function to read CSV files
+
+3. MODIFIED FUNCTIONS:
+   - sortPlayersByPerformance(): Now accepts sortType and additional data
+   - assignPlayersToTeams(): Passes additional parameters
+   - generateTeamSummary(): Calculates metrics according to sort type
+   - printResults(): Shows specific information by type
+   - parseCommandLineArgs(): Parses new flags
+   - main(): Loads Level B files as needed
+
+4. NEW FLAGS:
+   - --events_performance: Sort by average points per event
+   - --messages_length: Sort by total message length
+   - --points_spent: Sort by total points spent
+   - No flag: Random sort among the three types
+
+5. FILES USED:
+   - level_a_players.csv: Base player data
+   - level_b_messages.csv: Message length data
+   - level_b_spend.csv: Points spent data
+
+6. ALGORITHM:
+   - Same snake draft for all types
+   - Descending ordering by corresponding metric
+   - Tie-break by ascending player_id
+   - Team balance guaranteed
+
+Result: Completely functional system with three different sort types, maintaining the simplicity and determinism of the original algorithm.
