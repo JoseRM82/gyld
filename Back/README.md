@@ -4,10 +4,21 @@ A system for assigning players to balanced teams for the Gyld platform with mult
 
 ## How to run
 
+### From the "Back" directory:
 ```bash
 # Install dependencies
 npm install
+```
 
+### From the root directory:
+```bash
+# Install dependencies (first time only)
+npm run install-deps
+
+```
+
+### Use the app:
+```bash
 # Run with default number of teams (3) and events_performance sort
 npm start
 

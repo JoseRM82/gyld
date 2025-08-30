@@ -1,0 +1,13 @@
+{
+  "name": "gyld-player-sorter",
+  "version": "1.0.0",
+  "description": "A system for assigning players to balanced teams for the Gyld platform",
+  "main": "Back/SortPlayers.ts",
+  "scripts": {
+    "start": "cd Back && npm start",
+    "install-deps": "cd Back && npm install"
+  },
+  "keywords": ["gyld", "teams", "player-assignment"],
+  "author": "",
+  "license": "ISC"
+}
