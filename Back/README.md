@@ -8,10 +8,10 @@ A system for assigning players to balanced teams for the Gyld platform with mult
 # Install dependencies
 npm install
 
-# Run with default number of teams (3) and random sort
+# Run with default number of teams (3) and events_performance sort
 npm start
 
-# Run with specific number of teams and random sort
+# Run with specific number of teams and events_performance sort
 npm start -- --teams 4
 
 # Run with events performance sort (average points per event)
@@ -62,13 +62,16 @@ npm start -- --points_spent --teams 5
 
 In case of a tie in the selected metric, the player with the **lowest player_id** (ascending) is chosen first. This ensures that the result is deterministic and reproducible. The system is completely deterministic, so the same input always produces the same output.
 
+- **Tie-break**: "metric desc → player_id asc."
+- **Repeatability**: "Same input + flags → identical output (no random defaults)."
+
 ## Assumptions
 
 - CSV data is clean and contains no null or invalid values
 - `historical_event_engagements` can be 0, in which case the average is set to 0
 - Teams are numbered starting from 1 (not from 0)
 - CSV files are located in `../data/` relative to the script directory
-- If no sort type is specified, one is chosen randomly from the three available
+- If no sort type is specified, `events_performance` is used as default
 
 ## If I had more time, I would add...
 
@@ -92,6 +95,7 @@ In case of a tie in the selected metric, the player with the **lowest player_id*
 ## Time invested
 
 **01:45** - Including requirements analysis, implementation, testing, debugging, and documentation.
+**00:17** - Changes made to fit the functionality requests.
 
 ## Files Generated
 
@@ -123,6 +127,12 @@ See `FIXES.md` for detailed corrections made to AI-generated code, including:
 
 All prompts used with AI are in English and stored in the `prompts/` folder.
 
+## Additional User-Facing Stat
+
+**Performance Range**: Shows the spread between the best and worst performing players in each team (min-max values).
+
+**Why**: This metric helps users understand team diversity and explains why average team performance can vary significantly despite balanced assignment, making the distribution more transparent and trustworthy to the community.
+
 ## Example Output
 
 ### events_performance
@@ -141,6 +151,7 @@ player_id -> new_team (average points/event) [events_participated, total_points]
 Team 1:
   Size: 67 players
   Average points per event: 245.67
+  Performance Range: 45-1250 points/event (min-max)
   Total historical points: 125,890
   Players: [14, 8, 12, ...]
   Justification: This team has 67 players with an average of 245.67 points per event, indicating a balanced level of commitment.

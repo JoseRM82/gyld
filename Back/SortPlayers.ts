@@ -35,6 +35,7 @@ interface TeamSummary {
   avg_points_per_event: number;
   total_points: number;
   players: number[];
+  performance_range: string;
 }
 
 function calculateAveragePointsPerEvent(player: Player): number {
@@ -162,6 +163,7 @@ function generateTeamSummary(players: Player[], assignments: TeamAssignment[], n
     
     let avgScore = 0;
     let totalPoints = 0;
+    let performanceRange = "0-0";
     
     if (teamPlayerData.length > 0) {
       switch (sortType) {
@@ -169,6 +171,9 @@ function generateTeamSummary(players: Player[], assignments: TeamAssignment[], n
           const teamAvgScores = teamPlayerData.map(player => calculateAveragePointsPerEvent(player));
           avgScore = teamAvgScores.reduce((sum, score) => sum + score, 0) / teamAvgScores.length;
           totalPoints = teamPlayerData.reduce((sum, player) => sum + player.historical_points_earned, 0);
+          const minScore = Math.min(...teamAvgScores);
+          const maxScore = Math.max(...teamAvgScores);
+          performanceRange = `${minScore.toFixed(0)}-${maxScore.toFixed(0)} points/event`;
           break;
           
         case 'messages_length':
@@ -177,6 +182,9 @@ function generateTeamSummary(players: Player[], assignments: TeamAssignment[], n
             const teamMessageLengths = playerIds.map(id => messageLengths.get(id) || 0);
             avgScore = teamMessageLengths.reduce((sum, length) => sum + length, 0) / teamMessageLengths.length;
             totalPoints = teamPlayerData.reduce((sum, player) => sum + player.historical_points_earned, 0);
+            const minLength = Math.min(...teamMessageLengths);
+            const maxLength = Math.max(...teamMessageLengths);
+            performanceRange = `${minLength.toFixed(0)}-${maxLength.toFixed(0)} characters`;
           }
           break;
           
@@ -186,6 +194,9 @@ function generateTeamSummary(players: Player[], assignments: TeamAssignment[], n
             const teamPointsSpent = playerIds.map(id => pointsSpent.get(id) || 0);
             avgScore = teamPointsSpent.reduce((sum, spent) => sum + spent, 0) / teamPointsSpent.length;
             totalPoints = teamPlayerData.reduce((sum, player) => sum + player.historical_points_earned, 0);
+            const minSpent = Math.min(...teamPointsSpent);
+            const maxSpent = Math.max(...teamPointsSpent);
+            performanceRange = `${minSpent.toFixed(0)}-${maxSpent.toFixed(0)} points`;
           }
           break;
       }
@@ -196,7 +207,8 @@ function generateTeamSummary(players: Player[], assignments: TeamAssignment[], n
       size: teamPlayerData.length,
       avg_points_per_event: avgScore,
       total_points: totalPoints,
-      players: playerIds
+      players: playerIds,
+      performance_range: performanceRange
     });
   }
   
@@ -287,6 +299,7 @@ function printResults(assignments: TeamAssignment[], summaries: TeamSummary[], p
     }
     
     console.log(`  ${metricText}`);
+    console.log(`  Performance Range: ${summary.performance_range} (min-max)`);
     console.log(`  Total points: ${summary.total_points}`);
     console.log(`  Players: ${summary.players.join(', ')}`);
     
@@ -334,10 +347,9 @@ function parseCommandLineArgs(): { teams: number; sortType: SortType } {
     }
   }
   
-  // If no sort type specified, choose randomly
+  // If no sort type specified, use events_performance as default
   if (!args.includes('--events_performance') && !args.includes('--messages_length') && !args.includes('--points_spent')) {
-    const sortTypes: SortType[] = ['events_performance', 'messages_length', 'points_spent'];
-    sortType = sortTypes[Math.floor(Math.random() * sortTypes.length)];
+    sortType = 'events_performance';
   }
   
   return { teams, sortType };
